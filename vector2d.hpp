@@ -37,6 +37,7 @@ Vector2D & moveTowardVector( Vector2D & vect2dA, const Vector2D & vect2dDestinat
 float degree( float fRadianAngle );
 float getTangente( const Vector2D & vect2dA, const Vector2D & vect2dB );
 float getAngle( const Vector2D & vect2dA, const Vector2D & vect2dB );
+float dotProduct( const Vector2D & vect2dA, const Vector2D & vect2dB );
 
 #endif // VECTOR_H
 

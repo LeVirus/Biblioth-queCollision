@@ -203,6 +203,26 @@ float getTangente( const Vector2D & vect2dA, const Vector2D & vect2dB ){
 }
 
 /**
+ * @brief dotProduct Calcul du produit scalaire des 2 vecteur envoyés en paramètre.
+ * @param vect2dA Le premier vecteur.
+ * @param vect2dB Le deuxième vecteur.
+ * @return la valeur du produit scalaire.
+ */
+float dotProduct( const Vector2D & vect2dA, const Vector2D & vect2dB ){
+    return vect2dA . mfX * vect2dB . mfX + vect2dA . mfY * vect2dB . mfY;
+}
+
+/**
+ * @brief vectorDeterminant Calcul du déterminant des 2 vecteur envoyés en paramètre.
+ * @param vect2dA Le premier vecteur.
+ * @param vect2dB Le deuxième vecteur.
+ * @return la valeur du déterminant.
+ */
+float vectorDeterminant( const Vector2D & vect2dA, const Vector2D & vect2dB ){
+    return ( vect2dA . mfX * vect2dB . mfY ) - ( vect2dB . mfX * vect2dA . mfY );
+}
+
+/**
  * @brief Vector2D::~Vector2D Destructeur de Vector2D.
  */
 Vector2D::~Vector2D(){

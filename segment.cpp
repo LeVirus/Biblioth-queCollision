@@ -22,10 +22,27 @@ bool Segment::bAttribuerPointsSegment( const Vector2D & vect2dA, const Vector2D 
 }
 
 /**
+ * @brief Segment::getVect2dPointA Retourne une référence constante du point A du segment.
+ * @return La référence constante de mvect2dPointA.
+ */
+const Vector2D & Segment::getVect2dPointA()const{
+    return mvect2dPointA;
+}
+
+/**
+ * @brief Segment::getVect2dPointB Retourne une référence constante du point B du segment.
+ * @return La référence constante de mvect2dPointA.
+ */
+const Vector2D & Segment::getVect2dPointA()const{
+    return mvect2dPointA;
+}
+
+
+/**
  * @brief Segment::bCalculConstantesFonction Fonction calculant et mémorisant les constantes a et b de la fonction "y = ax + b" du segment.
  * @return false si les points ont la même ordonnée, true si les constantes ont bien été calculées.
  */
-bool Segment::bCalculConstantesSegment(){
+bool Segment::bCalculConstanteSegment(){
     if( mvect2dPointA . mfY == mvect2dPointB . mfY )return false;
     //calcul de a :: cohefficient directeur
     mfCstFonctionA = fRetourCohefDirectSegment();
@@ -44,19 +61,6 @@ float Segment::fRetourCohefDirectSegment(){
 }
 
 /**
- * @brief Segment::bCalculConstanteSegment Calcul des constantes a et b d'une fonction y = ax + b issu d'un segment dont les coordonnées
- * de 2 points sont envoyés en arguments.
- * @return true si les calculs ont été fait avec succés, false sinon.
- */
-bool Segment::bCalculConstanteSegment(){
-    //calcul de a :: cohefficient directeur
-    mfCstFonctionA = fRetourCohefDirectSegment();
-    //calcul de b :: b = ya - ( a * xa )
-    mfCstFonctionB = mvect2dPointA . mfY - mvect2dPointA . mfX * mfCstFonctionA;
-    return true;
-}
-
-/**
  * @brief Segment::fRetourYSegment Calcul du Y du segment avec un paramètre X.
  * @param fX La valeur de X par rapport au segment.
  * @return La valeur de Y trouvé à l'aide du X.
@@ -68,6 +72,44 @@ float Segment::fRetourYSegment( float fX ){
     return mvect2dPointA . mfY + ( fX - mvect2dPointA . mfX ) * mfCstFonctionA;
 }
 
+/**
+ * @brief getSegmentIntercect Retourne le point d'intersection des 2 segments envoyés en paramètre.
+ * Le programme est stopée si les 2 segment ne se coupent pas.
+ * @param segmentA Le premier segment.
+ * @param segmentB Le deuxième segment.
+ * @return Le Point d'intersection des 2 segments.
+ */
+Vector2D getSegmentIntercection( const Segment & segmentA, const Segment & segmentB ){
+
+}
+
+/**
+ * @brief bSegmentIntersect Fonction vérifiant si les 2 segments envoyés en paramètre sont sécant.
+ * @param segmentA Le premier segment.
+ * @param segmentB Le deuxième segment.
+ * @return true si il y a intersection, false sinon.
+ *
+ *
+ *
+ *
+ */
+bool bSegmentIntersect( const Segment & segmentA, const Segment & segmentB ){
+    Vector2D  vect2dSegmAPtA = segmentA . getVect2dPointA(), vect2dSegmAPtB = segmentA . getVect2dPointB(),
+    vect2dSegmBPtA = segmentB . getVect2dPointA(), vect2dSegmBPtB = segmentB . getVect2dPointB();
+
+    //si les 2 segments sont //
+    if( segmentA . fRetourCohefDirectSegment() == segmentB . fRetourCohefDirectSegment() )return false;
+
+    vectorDeterminant( ( vect2dSegmAPtB - vect2dSegmAPtA ), ( vect2dSegmBPtB - vect2dSegmAPtA ) )
+}
+
+/**
+ * @brief Segment::getVectorAB Retourne le vecteur AB du segment.
+ * @return La valeur du vecteur AB.
+ */
+Vector2D Segment::getVectorAB()const{
+    return mvect2dPointB - mvect2dPointA
+}
 
 
 Segment::~Segment(){
