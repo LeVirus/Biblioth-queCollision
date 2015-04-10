@@ -14,16 +14,20 @@ public:
     Segment();
     const Vector2D & getVect2dPointA()const;
     const Vector2D & getVect2dPointB()const;
+    float getCstA()const;
+    float getCstB()const;
     Segment( const Vector2D & vect2dA, const Vector2D & vect2dB );
     bool bAttribuerPointsSegment( const Vector2D & vect2dA, const Vector2D & vect2dB );
     float fRetourYSegment( float fX );
     float fRetourCohefDirectSegment();
     bool bCalculConstanteSegment();
     Vector2D getVectorAB()const;
+    bool bCheckAbscisInterval( float fCoordX )const;
     ~Segment();
 };
 
 Vector2D getSegmentIntercection( const Segment & segmentA, const Segment & segmentB );
 bool bSegmentIntersect( const Segment & segmentA, const Segment & segmentB );
+Vector2D getIntersectionRightLine( float fCstA, float fCstB, float fCstC, float fCstD );
 
 #endif // SEGMENT_H
