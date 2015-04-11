@@ -12,11 +12,11 @@ private:
     float mfCstFonctionA, mfCstFonctionB;
 public:
     Segment();
+    Segment( const Vector2D & vect2dA, const Vector2D & vect2dB );
     const Vector2D & getVect2dPointA()const;
     const Vector2D & getVect2dPointB()const;
     float getCstA()const;
     float getCstB()const;
-    Segment( const Vector2D & vect2dA, const Vector2D & vect2dB );
     bool bAttribuerPointsSegment( const Vector2D & vect2dA, const Vector2D & vect2dB );
     float fRetourYSegment( float fX );
     float fRetourCohefDirectSegment();
@@ -26,7 +26,9 @@ public:
     ~Segment();
 };
 
-Vector2D getSegmentIntercection( const Segment & segmentA, const Segment & segmentB );
+Vector2D getSegmentIntersection( const Segment & segmentA, const Segment & segmentB );
+Vector2D getSegmentIntersection( const Vector2D & vect2dAA, const Vector2D & vect2dAB,
+                                 const Vector2D & vect2dBA, const Vector2D & vect2dBB );
 bool bSegmentIntersect( const Segment & segmentA, const Segment & segmentB );
 Vector2D getIntersectionRightLine( float fCstA, float fCstB, float fCstC, float fCstD );
 

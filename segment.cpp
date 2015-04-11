@@ -7,6 +7,10 @@ Segment::Segment(){
 
 }
 
+Segment::Segment( const Vector2D & vect2dA, const Vector2D & vect2dB ){
+    bAttribuerPointsSegment( vect2dA, vect2dB );
+}
+
 /**
  * @brief Segment::bAttribuerPointsSegment Attribution des 2 points définissant le segment.
  * Si les 2 points en paramètre ont la même ordonnée la fonction retourne false.
@@ -15,7 +19,7 @@ Segment::Segment(){
  * @return
  */
 bool Segment::bAttribuerPointsSegment( const Vector2D & vect2dA, const Vector2D & vect2dB ){
-    if( vect2dA . mfY == vect2dB . mfY )return false;
+    if( vect2dA == vect2dB )return false;
     mvect2dPointA = vect2dA;
     mvect2dPointB = vect2dB;
     bCalculConstanteSegment();
@@ -50,8 +54,10 @@ bool Segment::bCalculConstanteSegment(){
  * @return retourne true si l'abscisse est bien dans le segment, false sinon.
  */
 bool Segment::bCheckAbscisInterval( float fCoordX )const{
-    return ! ( ( fCoordX < mvect2dPointA . mfX && fCoordX < mvect2dPointB . mfX ) ||
-             ( fCoordX > mvect2dPointA . mfX && fCoordX > mvect2dPointB . mfX ) );
+    return ! ( ( fabs( fCoordX - mvect2dPointA . mfX ) >= ZERO_FLOAT && fCoordX < mvect2dPointA . mfX &&
+                 fCoordX < mvect2dPointB . mfX ) ||
+             ( fabs( fCoordX - mvect2dPointA . mfX ) >= ZERO_FLOAT && fCoordX > mvect2dPointA . mfX &&
+               fCoordX > mvect2dPointB . mfX ) );
 }
 
 /**
@@ -59,7 +65,7 @@ bool Segment::bCheckAbscisInterval( float fCoordX )const{
  * @return La valeur du cohéficients directeur.
  */
 float Segment::fRetourCohefDirectSegment(){
-    assert( ! ( mvect2dPointA . mfY - mvect2dPointB . mfY  < ZERO_FLOAT ) && "Cohéficient directeur infini\n" );
+    assert( ! ( mvect2dPointA . mfY - mvect2dPointB . mfY  == 0.0f ) && "Cohéficient directeur infini\n" );
     return ( mvect2dPointB . mfY - mvect2dPointA . mfY ) / ( mvect2dPointB . mfX - mvect2dPointA . mfX );
 }
 
@@ -82,7 +88,7 @@ float Segment::fRetourYSegment( float fX ){
  * @param segmentB Le deuxième segment.
  * @return Le Point d'intersection des 2 segments.
  */
-Vector2D getSegmentIntercection( const Segment & segmentA, const Segment & segmentB ){
+Vector2D getSegmentIntersection( const Segment & segmentA, const Segment & segmentB ){
     Vector2D  vect2dIntersect =
             getIntersectionRightLine( segmentA . getCstA(), segmentA . getCstB(), segmentB . getCstA(), segmentB . getCstB() );
 
@@ -92,6 +98,21 @@ Vector2D getSegmentIntercection( const Segment & segmentA, const Segment & segme
         return Vector2D( NAN, NAN );
     }
     return vect2dIntersect;
+}
+
+/**
+ * @brief getSegmentIntercect Retourne le point d'intersection des 2 segments composé par les vector2d envoyés en paramètre.
+ * Le programme renvoie un Vector2D avec "nan" pour valeur si les 2 segment ne se coupent pas.
+ * @param vect2dAA Le premier point du premier segment.
+ * @param vect2dAB Le deuxième point du premier segment.
+ * @param vect2dBA Le premier point du deuxième segment.
+ * @param vect2dBB Le deuxième point du deuxième segment.
+ * @return Le Point d'intersection des 2 segments.
+ */
+Vector2D getSegmentIntersection( const Vector2D & vect2dAA, const Vector2D & vect2dAB,
+                                 const Vector2D & vect2dBA, const Vector2D & vect2dBB ){
+    return getSegmentIntersection( Segment( vect2dAA, vect2dAB ), Segment( vect2dBA, vect2dBB ) );
+
 }
 
 /**
@@ -106,7 +127,7 @@ Vector2D getSegmentIntercection( const Segment & segmentA, const Segment & segme
 Vector2D getIntersectionRightLine( float fCstA, float fCstB, float fCstC, float fCstD ){
     float fIntersectX, fIntersectY;
     //si les 2 segments sont //
-    if( fCstA == fCstC ){
+    if( fabs( fCstA - fCstC ) < ZERO_FLOAT ){
         return Vector2D( NAN, NAN );
     }
     //calcul de x :: ax + b = cx + d ==> x = ( d - b ) / ( a - c )
@@ -140,7 +161,6 @@ float Segment::getCstA()const{
 float Segment::getCstB()const{
     return mfCstFonctionB;
 }
-
 
 Segment::~Segment(){
 

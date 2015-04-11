@@ -2,7 +2,7 @@
 #define COLLISIONCONSTANTS_HPP
 
 const float PI = 3.14159265358979323846;
-const float ZERO_FLOAT = 0.0000;
+const float ZERO_FLOAT = 0.000;
 
 
 #endif // COLLISIONCONSTANTS_HPP
