@@ -18,6 +18,8 @@ public:
     float getCstA()const;
     float getCstB()const;
     bool bAttribuerPointsSegment( const Vector2D & vect2dA, const Vector2D & vect2dB );
+    bool bAttributePointAToSegment( const Vector2D & vect2dA );
+    bool bAttributePointBToSegment( const Vector2D & vect2dB );
     float fRetourYSegment( float fX );
     float fRetourCohefDirectSegment();
     bool bCalculConstanteSegment();

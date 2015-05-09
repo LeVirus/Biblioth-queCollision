@@ -16,7 +16,7 @@ Segment::Segment( const Vector2D & vect2dA, const Vector2D & vect2dB ){
  * Si les 2 points en paramètre ont la même ordonnée la fonction retourne false.
  * @param vect2dA Le premier point du segment.
  * @param vect2dB Le deuxième point du segment.
- * @return
+ * @return true si l'opération a été effectuée avec succés, false sinon.
  */
 bool Segment::bAttribuerPointsSegment( const Vector2D & vect2dA, const Vector2D & vect2dB ){
     if( vect2dA == vect2dB )return false;
@@ -24,6 +24,24 @@ bool Segment::bAttribuerPointsSegment( const Vector2D & vect2dA, const Vector2D 
     mvect2dPointB = vect2dB;
     bCalculConstanteSegment();
     return true;
+}
+
+/**
+ * @brief Segment::attributePointAToSegment Fonction modifiant le premier point du segment.
+ * @param vect2dA La valeur du nouveau point.
+ * @return true si l'opération a été effectuée avec succés, false sinon.
+ */
+bool Segment::bAttributePointAToSegment( const Vector2D & vect2dA ){
+    return bAttribuerPointsSegment( vect2dA, mvect2dPointB );
+}
+
+/**
+ * @brief Segment::attributePointBToSegment Fonction modifiant le deuxième point du segment.
+ * @param vect2dB La valeur du nouveau point.
+ * @return true si l'opération a été effectuée avec succés, false sinon.
+ */
+bool Segment::bAttributePointBToSegment( const Vector2D & vect2dB ){
+    return bAttribuerPointsSegment( mvect2dPointA, vect2dB );
 }
 
 /**
