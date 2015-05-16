@@ -31,7 +31,7 @@ public:
 Vector2D getSegmentIntersection( const Segment & segmentA, const Segment & segmentB );
 Vector2D getSegmentIntersection( const Vector2D & vect2dAA, const Vector2D & vect2dAB,
                                  const Vector2D & vect2dBA, const Vector2D & vect2dBB );
-bool bSegmentIntersect( const Segment & segmentA, const Segment & segmentB );
+bool bIsInCollision( const Segment & segmentA, const Segment & segmentB );
 Vector2D getIntersectionRightLine( float fCstA, float fCstB, float fCstC, float fCstD );
 
 #endif // SEGMENT_H

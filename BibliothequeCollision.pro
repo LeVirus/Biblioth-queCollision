@@ -5,7 +5,8 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     vector2d.cpp \
-    segment.cpp
+    segment.cpp \
+    rectbox.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -13,5 +14,6 @@ qtcAddDeployment()
 HEADERS += \
     vector2d.hpp \
     collisionconstants.hpp \
-    segment.hpp
+    segment.hpp \
+    rectbox.hpp
 

@@ -180,6 +180,18 @@ float Segment::getCstB()const{
     return mfCstFonctionB;
 }
 
+/**
+ * @brief bIsInCollision Fonction vérifiant si les 2 segments envoyés en paramètre sont en collision.
+ * @param segmentA Le premier segment.
+ * @param segmentB Le deuxième segment.
+ * @return true si il y a collision, false sinon.
+ */
+bool bIsInCollision( const Segment & segmentA, const Segment & segmentB ){
+    Vector2D vect2dA = getSegmentIntersection( segmentA, segmentB );
+    return ( vect2dA . mfX == NAN );
+}
+
+
 Segment::~Segment(){
 
 }
