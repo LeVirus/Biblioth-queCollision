@@ -2,6 +2,7 @@
 #define SEGMENT_H
 
 #include "vector2d.hpp"
+#include "segment.hpp"
 
 /**
  * @brief La classe Segment est composé de 2 Vector2d.
