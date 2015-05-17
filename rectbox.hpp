@@ -6,14 +6,14 @@
 class RectBox{
 private:
     Vector2D mPointOrigins;
-    unsigned int muiLenght, muiHeight;
+    float mfLenght, mfHeight;
 public:
     RectBox();
-    void modifyLenghtRectBox( unsigned int uiNewLenght );
-    void modifyHeightRectBox( unsigned int uiNewHeight );
+    void modifyLenghtRectBox( float fNewLenght );
+    void modifyHeightRectBox( float fNewHeight );
     void modifyOriginsRectBox( const Vector2D &vect2dNewPoint );
-    unsigned int getLenghtRectBox()const;
-    unsigned int getHeightRectBox()const;
+    float getLenghtRectBox()const;
+    float getHeightRectBox()const;
     const Vector2D &getOriginsRectBox()const;
 };
 

@@ -6,21 +6,21 @@
 RectBox::RectBox(){
 
 }
-;
-/**
- * @brief RectBox::modifyLenghtRectBox Fonction de modification de l'attribut muiLenght.
- * @param uiNewLenght La nouvelle valeur de muiLenght.
- */
-void RectBox::modifyLenghtRectBox( unsigned int uiNewLenght ){
 
+/**
+ * @brief RectBox::modifyLenghtRectBox Fonction de modification de l'attribut mfLenght.
+ * @param uiNewLenght La nouvelle valeur de mfLenght.
+ */
+void RectBox::modifyLenghtRectBox( float fNewLenght ){
+    mfLenght = fNewLenght;
 }
 
 /**
- * @brief RectBox::modifyLenghtRectBox Fonction de modification de l'attribut muiHeight.
- * @param uiNewLenght La nouvelle valeur de muiHeight.
+ * @brief RectBox::modifyLenghtRectBox Fonction de modification de l'attribut mfHeight.
+ * @param uiNewLenght La nouvelle valeur de mfHeight.
  */
-void RectBox::modifyHeightRectBox( unsigned int uiNewHeight ){
-
+void RectBox::modifyHeightRectBox( float fNewHeight ){
+    mfHeight = fNewHeight;
 }
 
 /**
@@ -28,23 +28,23 @@ void RectBox::modifyHeightRectBox( unsigned int uiNewHeight ){
  * @param uiNewLenght La nouvelle valeur de mPointOrigins.
  */
 void RectBox::modifyOriginsRectBox( const Vector2D &vect2dNewPoint ){
-
+    mPointOrigins = vect2dNewPoint;
 }
 
 /**
  * @brief RectBox::getLenghtRectBox Renvoie la valeur de la longueur de la box.
- * @return la valeur l'attribut muiLenght.
+ * @return la valeur l'attribut mfLenght.
  */
-unsigned int RectBox::getLenghtRectBox()const{
-
+float RectBox::getLenghtRectBox()const{
+    return mfLenght;
 }
 
 /**
  * @brief RectBox::getLenghtRectBox Renvoie la valeur de la largeur de la box.
- * @return la valeur l'attribut muiHeight.
+ * @return la valeur l'attribut mfHeight.
  */
-unsigned int RectBox::getHeightRectBox()const{
-
+float RectBox::getHeightRectBox()const{
+    return mfHeight;
 }
 
 /**
@@ -52,7 +52,7 @@ unsigned int RectBox::getHeightRectBox()const{
  * @return la valeur de l'attribut mPointOrigins.
  */
 const Vector2D &RectBox::getOriginsRectBox()const{
-
+    return mPointOrigins;
 }
 
 
@@ -63,5 +63,22 @@ const Vector2D &RectBox::getOriginsRectBox()const{
  * @return true si les 2 figures sont en collision, false sinon
  */
 bool bIsInCollision( const RectBox & rectBoxA, const RectBox & rectBoxB ){
+    const Vector2D &pointOriginsBoxA = rectBoxA . getOriginsRectBox(),
+            &pointOriginsBoxB = rectBoxA . getOriginsRectBox();
+    float fAbscTopRightA = pointOriginsBoxA . mfX + rectBoxA . getLenghtRectBox(),
+            fAbscTopRightB = pointOriginsBoxB . mfX + rectBoxB . getLenghtRectBox(),
+            fOrdDownLeftA = pointOriginsBoxA . mfY + rectBoxA . getHeightRectBox(),
+            fOrdDownLeftB = pointOriginsBoxB . mfY + rectBoxB . getHeightRectBox();
 
+    //test latéral
+    if( pointOriginsBoxA . mfX >  fAbscTopRightB ||
+            fAbscTopRightA < pointOriginsBoxA . mfX ){
+        return false;
+    }
+    //test vertical
+    if( pointOriginsBoxA . mfY >  fOrdDownLeftB ||
+            fOrdDownLeftA < pointOriginsBoxA . mfY ){
+        return false;
+    }
+    return true;
 }

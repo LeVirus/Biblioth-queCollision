@@ -173,11 +173,59 @@ float Segment::getCstA()const{
 }
 
 /**
+ * @brief Segment::getRectBox Retourne la boite englobante du segment.
+ * @return mRectBox.
+ */
+const RectBox & Segment::getRectBox()const{
+    return mRectBox;
+}
+
+/**
  * @brief Segment::getCstA Retourne la constante b de la fonction du segment( y = ax + b ).
  * @return La valeur de b.
  */
 float Segment::getCstB()const{
     return mfCstFonctionB;
+}
+
+/**
+ * @brief Segment::calcRectBox Calcul de la boite englobante du segment en fonction des 2 points le constituant.
+ */
+void Segment::calcRectBox(){
+    float fAbscPointOrigins, fOrdPointOrigins, fLenghtBox, fHeightBox;
+
+    //Traitement abscisse
+    if( mvect2dPointA . mfX < mvect2dPointB . mfX ){
+        fAbscPointOrigins = mvect2dPointA . mfX;
+        fLenghtBox = mvect2dPointB . mfX - mvect2dPointA . mfX;
+    }
+    else if( mvect2dPointA . mfX > mvect2dPointB . mfX ){
+        fAbscPointOrigins = mvect2dPointB . mfX;
+        fLenghtBox = mvect2dPointA . mfX - mvect2dPointB . mfX;
+    }
+    //si mvect2dPointA . mfX == mvect2dPointB . mfX
+    else{
+        fAbscPointOrigins = mvect2dPointA . mfX;
+        fLenghtBox = 1;
+    }
+
+    //Traitement ordonnée
+    if( mvect2dPointA . mfY < mvect2dPointB . mfY ){
+        fOrdPointOrigins = mvect2dPointA . mfY;
+        fHeightBox = mvect2dPointB . mfY - mvect2dPointA . mfY;
+    }
+    else if( mvect2dPointA . mfY > mvect2dPointB . mfY ){
+        fOrdPointOrigins = mvect2dPointB . mfY;
+        fHeightBox = mvect2dPointA . mfY - mvect2dPointB . mfY;
+    }
+    //si mvect2dPointA . mfY == mvect2dPointB . mfY
+    else{
+        fOrdPointOrigins = mvect2dPointA . mfY;
+        fHeightBox = 1;
+    }
+    mRectBox . modifyOriginsRectBox( Vector2D( fAbscPointOrigins, fOrdPointOrigins ) );
+    mRectBox . modifyLenghtRectBox( fLenghtBox );
+    mRectBox . modifyHeightRectBox( fHeightBox );
 }
 
 /**
