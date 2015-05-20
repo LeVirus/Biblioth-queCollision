@@ -23,6 +23,7 @@ bool Segment::bAttribuerPointsSegment( const Vector2D & vect2dA, const Vector2D 
     mvect2dPointA = vect2dA;
     mvect2dPointB = vect2dB;
     bCalculConstanteSegment();
+    calcRectBox();
     return true;
 }
 
@@ -82,7 +83,7 @@ bool Segment::bCheckAbscisInterval( float fCoordX )const{
  * @brief calculCohefDirectSegment Calcul du cohéficient directeur du segment.
  * @return La valeur du cohéficients directeur.
  */
-float Segment::fRetourCohefDirectSegment(){
+float Segment::fRetourCohefDirectSegment()const{
     assert( ! ( mvect2dPointA . mfY - mvect2dPointB . mfY  == 0.0f ) && "Cohéficient directeur infini\n" );
     return ( mvect2dPointB . mfY - mvect2dPointA . mfY ) / ( mvect2dPointB . mfX - mvect2dPointA . mfX );
 }
@@ -92,7 +93,7 @@ float Segment::fRetourCohefDirectSegment(){
  * @param fX La valeur de X par rapport au segment.
  * @return La valeur de Y trouvé à l'aide du X.
  */
-float Segment::fRetourYSegment( float fX ){
+float Segment::fRetourYSegment( float fX ) const{
     //si le X est hors du segment
     assert( ! ( fX > mvect2dPointB . mfX ||  fX < mvect2dPointA . mfX ) && "Valeur X hors norme Segment." );
     //yRecherché = YdebutSegment + ( distance abscisse premier point et point recherché ) * coheffDirecteurSegment
@@ -239,6 +240,25 @@ bool bIsInCollision( const Segment & segmentA, const Segment & segmentB ){
     return ( vect2dA . mfX == NAN );
 }
 
+/**
+ * @brief bIsInCollision Fonction vérifiant si le segment et la boite englobante envoyés en paramètre sont en collision.
+ * @param segmentA Le segment.
+ * @param rectBoxB La boite englobante.
+ * @return true si il y a collision, false sinon.
+ */
+bool bIsInCollision( const Segment & segmentA, const RectBox & rectBoxB ){
+    return bIsInCollision( segmentA . getRectBox(), rectBoxB );
+}
+
+/**
+ * @brief bIsInCollision Fonction vérifiant si le segment et la boite englobante envoyés en paramètre sont en collision.
+ * @param rectBoxA La boite englobante.
+ * @param segmentB Le segment.
+ * @return true si il y a collision, false sinon.
+ */
+bool bIsInCollision( const RectBox & rectBoxA, const Segment & segmentB ){
+    return bIsInCollision( segmentB, rectBoxA );
+}
 
 Segment::~Segment(){
 
