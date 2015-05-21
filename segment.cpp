@@ -237,7 +237,8 @@ void Segment::calcRectBox(){
  */
 bool bIsInCollision( const Segment & segmentA, const Segment & segmentB ){
     Vector2D vect2dA = getSegmentIntersection( segmentA, segmentB );
-    return ( vect2dA . mfX == NAN );
+    if( vect2dA . mfX == NAN )return false;
+    return true;
 }
 
 /**
@@ -247,7 +248,23 @@ bool bIsInCollision( const Segment & segmentA, const Segment & segmentB ){
  * @return true si il y a collision, false sinon.
  */
 bool bIsInCollision( const Segment & segmentA, const RectBox & rectBoxB ){
-    return bIsInCollision( segmentA . getRectBox(), rectBoxB );
+    float fHeightBox = rectBoxB . getHeightRectBox(),
+            fLenghtBox = rectBoxB . getLenghtRectBox();
+    Vector2D vect2dOrigineBox = rectBoxB . getOriginsRectBox(),
+            vect2dAngleTopRightBox = Vector2D( vect2dOrigineBox . mfX + fLenghtBox, vect2dOrigineBox . mfY ),
+            vect2dAngleDownRightBox = Vector2D( vect2dOrigineBox . mfX + fLenghtBox, vect2dOrigineBox . mfY + fHeightBox ),
+            vect2dAngleDownLeftBox = Vector2D( vect2dOrigineBox . mfX, vect2dOrigineBox . mfY + fHeightBox );
+
+    //Vérif de la boite englobante
+    if( bIsInCollision( segmentA . getRectBox(), rectBoxB ) )return false;
+
+    //Check de tous les segment composant la boite englobante avec le segment.
+    if ( bIsInCollision( segmentA, Segment( vect2dOrigineBox, vect2dAngleTopRightBox ) ) )return true;
+    if ( bIsInCollision( segmentA, Segment( vect2dAngleTopRightBox, vect2dAngleDownRightBox ) ) )return true;
+    if ( bIsInCollision( segmentA, Segment( vect2dAngleDownRightBox, vect2dAngleDownLeftBox ) ) )return true;
+    if ( bIsInCollision( segmentA, Segment( vect2dAngleDownLeftBox, vect2dOrigineBox ) ) )return true;
+
+    return false;
 }
 
 /**
