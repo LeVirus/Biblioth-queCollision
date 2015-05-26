@@ -53,6 +53,14 @@ const Vector2D & Segment::getVect2dPointA()const{
     return mvect2dPointA;
 }
 
+/**
+ * @brief Segment::getVect2dPointB Retourne une référence constante du point B du segment.
+ * @return La référence constante de mvect2dPointB.
+ */
+const Vector2D & Segment::getVect2dPointB()const{
+    return mvect2dPointB;
+}
+
 
 /**
  * @brief Segment::bCalculConstantesFonction Fonction calculant et mémorisant les constantes a et b de la fonction "y = ax + b" du segment.
@@ -248,7 +256,7 @@ bool bIsInCollision( const Segment & segmentA, const Segment & segmentB ){
  * @return true si il y a collision, false sinon.
  */
 bool bIsInCollision( const Segment & segmentA, const RectBox & rectBoxB ){
-    float fHeightBox = rectBoxB . getHeightRectBox(),
+    /*float fHeightBox = rectBoxB . getHeightRectBox(),
             fLenghtBox = rectBoxB . getLenghtRectBox();
     Vector2D vect2dOrigineBox = rectBoxB . getOriginsRectBox(),
             vect2dAngleTopRightBox = Vector2D( vect2dOrigineBox . mfX + fLenghtBox, vect2dOrigineBox . mfY ),
@@ -264,7 +272,14 @@ bool bIsInCollision( const Segment & segmentA, const RectBox & rectBoxB ){
     if ( bIsInCollision( segmentA, Segment( vect2dAngleDownRightBox, vect2dAngleDownLeftBox ) ) )return true;
     if ( bIsInCollision( segmentA, Segment( vect2dAngleDownLeftBox, vect2dOrigineBox ) ) )return true;
 
-    return false;
+    return false;*/
+    float fRetourYSegment( float fX );
+    Vector2D vect2dPointSegment = segmentA . getVect2dPointA();
+    bool bExit = false, bBSupA;
+    bBSupA = ( segmentA . getVect2dPointB() . mfX >= vect2dPointSegment . mfX );
+    do{
+
+    }while( bExit );
 }
 
 /**

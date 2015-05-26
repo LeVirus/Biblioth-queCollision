@@ -64,11 +64,12 @@ const Vector2D &RectBox::getOriginsRectBox()const{
  */
 bool bIsInCollision( const RectBox & rectBoxA, const RectBox & rectBoxB ){
     const Vector2D &pointOriginsBoxA = rectBoxA . getOriginsRectBox(),
-            &pointOriginsBoxB = rectBoxA . getOriginsRectBox();
+            &pointOriginsBoxB = rectBoxB . getOriginsRectBox();
     float fAbscTopRightA = pointOriginsBoxA . mfX + rectBoxA . getLenghtRectBox(),
             fAbscTopRightB = pointOriginsBoxB . mfX + rectBoxB . getLenghtRectBox(),
             fOrdDownLeftA = pointOriginsBoxA . mfY + rectBoxA . getHeightRectBox(),
             fOrdDownLeftB = pointOriginsBoxB . mfY + rectBoxB . getHeightRectBox();
+
 
     //test latéral
     if( pointOriginsBoxA . mfX >  fAbscTopRightB ||
@@ -80,5 +81,18 @@ bool bIsInCollision( const RectBox & rectBoxA, const RectBox & rectBoxB ){
             fOrdDownLeftA < pointOriginsBoxA . mfY ){
         return false;
     }
+    return true;
+}
+
+/**
+ * @brief bIsInCollision Verification si un point et une boite englobante sont en collision.
+ * @param rectBoxA La boite englobante.
+ * @param vect2dB Le point.
+ * @return true si il y a collision, false sinon.
+ */
+bool bIsInCollision( const RectBox & rectBoxA, const Vector2D & vect2dB ){
+    const Vector2D & OriginsRect = rectBoxA . mPointOrigins;
+    if( ! ( vect2dB . mfX <= OriginsRect . mfX + rectBoxA . getLenghtRectBox() && vect2dB . mfX >= OriginsRect . mfX ) )return false;
+    else if( ! ( vect2dB . mfY <= OriginsRect . mfY + rectBoxA . getHeightRectBox() && vect2dB . mfY >= OriginsRect . mfY ) )return false;
     return true;
 }
