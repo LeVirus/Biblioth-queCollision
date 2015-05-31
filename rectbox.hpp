@@ -18,6 +18,7 @@ public:
 };
 
 bool bIsInCollision( const RectBox & rectBoxA, const RectBox & rectBoxB );
-bool bIsInCollision( const RectBox & rectBoxA, const Vector2D & vect2dB );
+bool bIsInCollision( const RectBox & rectBox, const Vector2D & vect2d );
+bool bIsInCollision( const Vector2D & vect2d, const RectBox & rectBox );
 
 #endif // RECTBOX_H

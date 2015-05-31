@@ -10,26 +10,30 @@
  */
 class Segment{
 private:
-    Vector2D mvect2dPointA, mvect2dPointB;
+    Vector2D mvect2dPointA, mvect2dPointB, mvect2dAB;
     RectBox mRectBox;
     float mfCstFonctionA, mfCstFonctionB;
+
+    bool bAttribuerPointsSegment( const Vector2D & vect2dA, const Vector2D & vect2dB );
+    bool bAttributePointAToSegment( const Vector2D & vect2dA );
+    bool bAttributePointBToSegment( const Vector2D & vect2dB );
 public:
     Segment();
     Segment( const Vector2D & vect2dA, const Vector2D & vect2dB );
     const Vector2D & getVect2dPointA()const;
     const Vector2D & getVect2dPointB()const;
+    const Vector2D & getVect2dVectorAB()const;
     const RectBox & getRectBox()const;
+    void moveSegment( const Vector2D & vect2dNewPosition );
     float getCstA()const;
     float getCstB()const;
-    bool bAttribuerPointsSegment( const Vector2D & vect2dA, const Vector2D & vect2dB );
-    bool bAttributePointAToSegment( const Vector2D & vect2dA );
-    bool bAttributePointBToSegment( const Vector2D & vect2dB );
     float fRetourYSegment( float fX )const;
     float fRetourCohefDirectSegment()const;
     bool bCalculConstanteSegment();
     Vector2D getVectorAB()const;
     bool bCheckAbscisInterval( float fCoordX )const;
     void calcRectBox();
+    void attributeVectorAB( const Vector2D & vect2dAB );
     ~Segment();
 };
 

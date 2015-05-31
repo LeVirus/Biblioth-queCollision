@@ -24,8 +24,21 @@ bool Segment::bAttribuerPointsSegment( const Vector2D & vect2dA, const Vector2D 
     mvect2dPointB = vect2dB;
     bCalculConstanteSegment();
     calcRectBox();
+    attributeVectorAB( vect2dB - vect2dA );
     return true;
 }
+
+/**
+ * @brief Segment::moveSegment Déplacement du segment a partir de la position envoyée en paramètre et de la valeur du vecteur AB.
+ * vect2dNewPosition sera la nouvelle valeur de mvect2dPointA et mvect2dPointB vaudra mvect2dPointA + mvect2dAB.
+ * @param vect2dNewPosition La nouvelle position du point A.
+ */
+void Segment::moveSegment( const Vector2D & vect2dNewPosition ){
+    mvect2dPointA = vect2dNewPosition;
+    mvect2dPointB = vect2dNewPosition + mvect2dAB;
+    calcRectBox();
+}
+
 
 /**
  * @brief Segment::attributePointAToSegment Fonction modifiant le premier point du segment.
@@ -51,6 +64,14 @@ bool Segment::bAttributePointBToSegment( const Vector2D & vect2dB ){
  */
 const Vector2D & Segment::getVect2dPointA()const{
     return mvect2dPointA;
+}
+
+/**
+ * @brief Segment::getVect2dVectorAB Retourne une référence constante du vecteur associé au segment AB.
+ * @return La référence constante de mvect2dAB.
+ */
+const Vector2D & Segment::getVect2dVectorAB()const{
+    return mvect2dAB;
 }
 
 /**
@@ -198,6 +219,14 @@ float Segment::getCstB()const{
 }
 
 /**
+ * @brief Segment::attributeVectorAB Attribution du vecteur séparant les 2 points A et B.
+ * @param vect2dAB La nouvelle valeur du vecteur AB.
+ */
+void Segment::attributeVectorAB( const Vector2D & vect2dAB ){
+    mvect2dAB = vect2dAB;
+}
+
+/**
  * @brief Segment::calcRectBox Calcul de la boite englobante du segment en fonction des 2 points le constituant.
  */
 void Segment::calcRectBox(){
@@ -239,14 +268,18 @@ void Segment::calcRectBox(){
 
 /**
  * @brief bIsInCollision Fonction vérifiant si les 2 segments envoyés en paramètre sont en collision.
+ * ((LineB2.Y – LineB1.Y) * (LineA2.X – LineA1.X)) –
+        ((LineB2.X – lineB1.X) * (LineA2.Y - LineA1.Y))
  * @param segmentA Le premier segment.
  * @param segmentB Le deuxième segment.
  * @return true si il y a collision, false sinon.
  */
 bool bIsInCollision( const Segment & segmentA, const Segment & segmentB ){
-    Vector2D vect2dA = getSegmentIntersection( segmentA, segmentB );
-    if( vect2dA . mfX == NAN )return false;
-    return true;
+    Vector2D vect2dAA = segmentA . getVect2dPointA(), vect2dAB = segmentA . getVect2dPointB(),
+             vect2dBA = segmentB . getVect2dPointA(), vect2dBB = segmentB . getVect2dPointB();
+    float fDeterminant = ( ( vect2dBB . mfY - vect2dBA . mfY ) * ( vect2dAB . mfX - vect2dAA . mfX ) ) -
+            ( ( vect2dBB . mfY - vect2dBA . mfY ) * ( vect2dAB . mfY - vect2dAA . mfY ) );
+    return fabs( fDeterminant ) <= ZERO_FLOAT;
 }
 
 /**
@@ -256,7 +289,7 @@ bool bIsInCollision( const Segment & segmentA, const Segment & segmentB ){
  * @return true si il y a collision, false sinon.
  */
 bool bIsInCollision( const Segment & segmentA, const RectBox & rectBoxB ){
-    /*float fHeightBox = rectBoxB . getHeightRectBox(),
+    float fHeightBox = rectBoxB . getHeightRectBox(),
             fLenghtBox = rectBoxB . getLenghtRectBox();
     Vector2D vect2dOrigineBox = rectBoxB . getOriginsRectBox(),
             vect2dAngleTopRightBox = Vector2D( vect2dOrigineBox . mfX + fLenghtBox, vect2dOrigineBox . mfY ),
@@ -264,7 +297,9 @@ bool bIsInCollision( const Segment & segmentA, const RectBox & rectBoxB ){
             vect2dAngleDownLeftBox = Vector2D( vect2dOrigineBox . mfX, vect2dOrigineBox . mfY + fHeightBox );
 
     //Vérif de la boite englobante
-    if( bIsInCollision( segmentA . getRectBox(), rectBoxB ) )return false;
+    if( ! bIsInCollision( segmentA . getRectBox(), rectBoxB ) )return false;
+
+    if( bIsInCollision( segmentA . getVect2dPointA(), rectBoxB ) || bIsInCollision( segmentA . getVect2dPointB(), rectBoxB ) )return true;
 
     //Check de tous les segment composant la boite englobante avec le segment.
     if ( bIsInCollision( segmentA, Segment( vect2dOrigineBox, vect2dAngleTopRightBox ) ) )return true;
@@ -272,14 +307,14 @@ bool bIsInCollision( const Segment & segmentA, const RectBox & rectBoxB ){
     if ( bIsInCollision( segmentA, Segment( vect2dAngleDownRightBox, vect2dAngleDownLeftBox ) ) )return true;
     if ( bIsInCollision( segmentA, Segment( vect2dAngleDownLeftBox, vect2dOrigineBox ) ) )return true;
 
-    return false;*/
-    float fRetourYSegment( float fX );
+    return false;
+    /*float fRetourYSegment( float fX );
     Vector2D vect2dPointSegment = segmentA . getVect2dPointA();
     bool bExit = false, bBSupA;
     bBSupA = ( segmentA . getVect2dPointB() . mfX >= vect2dPointSegment . mfX );
     do{
 
-    }while( bExit );
+    }while( bExit );*/
 }
 
 /**

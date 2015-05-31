@@ -86,13 +86,24 @@ bool bIsInCollision( const RectBox & rectBoxA, const RectBox & rectBoxB ){
 
 /**
  * @brief bIsInCollision Verification si un point et une boite englobante sont en collision.
- * @param rectBoxA La boite englobante.
- * @param vect2dB Le point.
+ * @param rectBox La boite englobante.
+ * @param vect2d Le point.
  * @return true si il y a collision, false sinon.
  */
-bool bIsInCollision( const RectBox & rectBoxA, const Vector2D & vect2dB ){
-    const Vector2D & OriginsRect = rectBoxA . mPointOrigins;
-    if( ! ( vect2dB . mfX <= OriginsRect . mfX + rectBoxA . getLenghtRectBox() && vect2dB . mfX >= OriginsRect . mfX ) )return false;
-    else if( ! ( vect2dB . mfY <= OriginsRect . mfY + rectBoxA . getHeightRectBox() && vect2dB . mfY >= OriginsRect . mfY ) )return false;
+bool bIsInCollision( const RectBox & rectBox, const Vector2D & vect2d ){
+    const Vector2D & OriginsRect = rectBox . getOriginsRectBox();
+    if( ! ( vect2d . mfX <= OriginsRect . mfX + rectBox . getLenghtRectBox() && vect2d . mfX >= OriginsRect . mfX ) )return false;
+    else if( ! ( vect2d . mfY <= OriginsRect . mfY + rectBox . getHeightRectBox() && vect2d . mfY >= OriginsRect . mfY ) )return false;
     return true;
 }
+
+/**
+ * @brief bIsInCollision Verification si un point et une boite englobante sont en collision.
+ * @param rectBox La boite englobante.
+ * @param vect2d Le point.
+ * @return true si il y a collision, false sinon.
+ */
+bool bIsInCollision( const Vector2D & vect2d, const RectBox & rectBox ){
+    return bIsInCollision( rectBox, vect2d );
+}
+
