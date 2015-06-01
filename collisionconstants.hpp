@@ -2,7 +2,7 @@
 #define COLLISIONCONSTANTS_HPP
 
 const float PI = 3.14159265358979323846;
-const float ZERO_FLOAT = 0.000;
+const float ZERO_FLOAT = 0.0001;
 
 enum{TO_THE_RIGHT, TO_THE_LEFT, ON_THE_SEGMENT};
 

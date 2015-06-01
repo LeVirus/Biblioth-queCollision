@@ -2,6 +2,7 @@
 #include "collisionconstants.hpp"
 #include <cassert>
 #include <cmath>
+#include <iostream>
 
 Segment::Segment(){
 
@@ -24,7 +25,7 @@ bool Segment::bAttribuerPointsSegment( const Vector2D & vect2dA, const Vector2D 
     mvect2dPointB = vect2dB;
     bCalculConstanteSegment();
     calcRectBox();
-    attributeVectorAB( vect2dB - vect2dA );
+    //attributeVectorAB( vect2dB - vect2dA );
     return true;
 }
 
@@ -138,7 +139,7 @@ float Segment::fRetourYSegment( float fX ) const{
  */
 Vector2D getSegmentIntersection( const Segment & segmentA, const Segment & segmentB ){
     Vector2D  vect2dIntersect =
-            getIntersectionRightLine( segmentA . getCstA(), segmentA . getCstB(), segmentB . getCstA(), segmentB . getCstB() );
+            getIntersectionRightLine( trunc( segmentA . getCstA() ), trunc( segmentA . getCstB() ), trunc( segmentB . getCstA() ), trunc( segmentB . getCstB() ) );
 
     //si les segments sont // ou que le point d'intersection est hors d'au moins un des 2 segments
     if( vect2dIntersect . mfX == NAN ||
@@ -224,6 +225,7 @@ float Segment::getCstB()const{
  */
 void Segment::attributeVectorAB( const Vector2D & vect2dAB ){
     mvect2dAB = vect2dAB;
+    bAttribuerPointsSegment( Vector2D( 0, 0 ), mvect2dAB );
 }
 
 /**
@@ -275,11 +277,9 @@ void Segment::calcRectBox(){
  * @return true si il y a collision, false sinon.
  */
 bool bIsInCollision( const Segment & segmentA, const Segment & segmentB ){
-    Vector2D vect2dAA = segmentA . getVect2dPointA(), vect2dAB = segmentA . getVect2dPointB(),
-             vect2dBA = segmentB . getVect2dPointA(), vect2dBB = segmentB . getVect2dPointB();
-    float fDeterminant = ( ( vect2dBB . mfY - vect2dBA . mfY ) * ( vect2dAB . mfX - vect2dAA . mfX ) ) -
-            ( ( vect2dBB . mfY - vect2dBA . mfY ) * ( vect2dAB . mfY - vect2dAA . mfY ) );
-    return fabs( fDeterminant ) <= ZERO_FLOAT;
+    if( ! bIsInCollision( segmentA . getRectBox(), segmentB . getRectBox() ) )return false;
+    Vector2D vect2dIntersect = getSegmentIntersection( segmentA, segmentB );
+    return vect2dIntersect . mfX != NAN;
 }
 
 /**
